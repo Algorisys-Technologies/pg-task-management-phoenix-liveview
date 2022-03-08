@@ -1,0 +1,50 @@
+<h1>Listing Tasks</h1>
+<%= if @live_action in [:index] do %>
+  <span><%= live_patch "New Task", to: Routes.task_index_path(@socket, :new) %></span>
+<% end %>
+
+<%= if @live_action in [:new] do %>
+  <span><%= live_patch "Back", to: Routes.task_index_path(@socket, :index) %></span>
+<% end %>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.task_index_path(@socket, :index)}>
+    <.live_component
+      module={TsmWeb.TaskLive.FormComponent}
+      id={@task.id}
+      title={@page_title}
+      action={@live_action}
+      task={@task}
+      current_user={@current_user}
+      return_to={Routes.task_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<%= if @live_action in [:new] do %>
+  <.live_component module={TsmWeb.TaskLive.FormComponent} 
+    id={:new}
+    title={@page_title}
+    action={@live_action}
+    task={@task}
+    current_user={@current_user}
+    return_to={Routes.task_index_path(@socket, :new)}
+  />
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Task type</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="tasks" phx-update="prepend">
+    <%= for task <- @tasks do %>
+      <.live_component module={TsmWeb.TaskLive.TaskComponent} id={task.id} task={task} /> 
+    <% end %>
+  </tbody>
+</table>
+
+
