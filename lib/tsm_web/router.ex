@@ -21,12 +21,7 @@ defmodule TsmWeb.Router do
     pipe_through(:browser)
 
     get("/", PageController, :index)
-    live("/tasks", TaskLive.Index, :index)
-    live("/tasks/new", TaskLive.Index, :new)
-    live("/tasks/:id/edit", TaskLive.Index, :edit)
 
-    live("/tasks/:id", TaskLive.Show, :show)
-    live("/tasks/:id/show/edit", TaskLive.Show, :edit)
   end
 
   # Other scopes may use custom stacks.
@@ -84,6 +79,13 @@ defmodule TsmWeb.Router do
     get("/users/settings", UserSettingsController, :edit)
     put("/users/settings", UserSettingsController, :update)
     get("/users/settings/confirm_email/:token", UserSettingsController, :confirm_email)
+
+    #neccessary to add here for access this pages after login only
+    live("/tasks", TaskLive.Index, :index)
+    live("/tasks/new", TaskLive.Index, :new)
+    live("/tasks/:id/edit", TaskLive.Index, :edit)
+    live("/tasks/:id", TaskLive.Show, :show)
+    live("/tasks/:id/show/edit", TaskLive.Show, :edit)
   end
 
   scope "/", TsmWeb do
